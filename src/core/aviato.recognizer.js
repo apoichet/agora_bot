@@ -1,32 +1,28 @@
 const config = require('../config/index');
 const request = require('request-promise-native');
 
-class TockRecognizer{
+class AviatoRecognizer{
 
   constructor(){
     this._options = {
       method: 'post',
       body: {
-        "namespace": config.nlp.tock.namespace,
-        "applicationName": config.nlp.tock.appName,
-        "context": config.nlp.tock.context
       },
-      headers: config.nlp.tock.header,
+      headers: config.nlp.aviato.header,
       json: true,
-      url: config.nlp.tock.url
+      url: config.nlp.aviato.url
     };
   }
 
-  recognize(context, done){
+  async recognize(context, done){
 
-    this._options.body.queries = [context.message.text.replace(config.talkbot, '').trim()];
+    this._options.body.message = context.message.text.replace(config.talkbot, '').trim();
 
     request(this._options)
     .then(response =>
     {
-
       done(null, {
-        score: response.intentProbability,
+        score: response.intentProbability || 1,
         intent: response.intent,
         params: response.entities,
         userId: context.message.user.id,
@@ -36,6 +32,4 @@ class TockRecognizer{
   }
 }
 
-module.exports = TockRecognizer;
-
-
+module.exports = AviatoRecognizer;

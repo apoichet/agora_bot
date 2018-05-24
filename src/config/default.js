@@ -15,10 +15,18 @@ module.exports = {
       url:"http://TOCK.lab-o.io:8888/rest/nlp/parse",
       header:{
         'X-APP-NAMESPACE': 'vsc=az#_1A'
-      }
+      },
+      timeout:2000
     },
     api: {
       token:'002798ccc57048eab6eb8cac3597f9a1'
+    },
+    aviato:{
+      header:{
+        'accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      url:"http://aviato.eu-west-1.elasticbeanstalk.com/nlp/v1/message"
     }
   },
   platforms:{
@@ -34,5 +42,9 @@ module.exports = {
     }
   },
   publicPath: path.join(__dirname, '../server/public'),
-  talkbot:"@Oui_Agora_Bot"
+  botname:"Agora Bot",
+  talkbot:"@Oui_Agora_Bot",
+  image:{
+    url:"http://forum.e-train.fr/album_mod/upload/grandes/495ed81a334a9de8faf80363789f4b03.jpg"
+  }
 };

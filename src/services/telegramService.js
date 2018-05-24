@@ -17,26 +17,14 @@ class TelegramService{
   }
 
   async getChatMembers(chatId) {
-
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatAdministrators?chat_id=${chatId}`;
-
-    const response = await request(this._options).then(response => {
-      console.log(response);
-      return response;
-    });
-
-    return response.result.user;
+    const response = await request(this._options);
+    return response.result;
   }
 
   async getChatMembersCount(chatId) {
-
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatMembersCount?chat_id=${chatId}`;
-
-    const response = await request(this._options).then(response => {
-      console.log(response);
-      return response;
-    });
-
+    const response = await request(this._options);
     return response.result;
   }
 

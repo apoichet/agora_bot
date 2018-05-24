@@ -1,5 +1,8 @@
-const welcome = require('./welcome');
-const departure = require('./departure');
+const help = require('./help');
+const insult = require('./insult');
+const reservation = require('./reservation');
 const unknown = require('./unknown');
-module.exports = {welcome, unknown};
+const greetings = require('./greetings');
+const agreement = require('./agreement');
+module.exports = {help, unknown, reservation, insult, greetings};
 
