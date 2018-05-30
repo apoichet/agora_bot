@@ -1,8 +1,11 @@
-const help = require('./help');
+const me = require('./entries/me');
+const greetings = require('./entries/greetings');
+const reservation = require('./entries/reservation');
 const insult = require('./insult');
-const reservation = require('./reservation');
 const unknown = require('./unknown');
-const greetings = require('./greetings');
 const agreement = require('./agreement');
-module.exports = {help, unknown, reservation, insult, greetings};
+const gratitude = require('./gratitude');
+const joke = require('./joke');
+const travel = require('./travel');
+module.exports = {me, greetings, reservation, unknown, insult, gratitude, agreement, joke, travel};
 

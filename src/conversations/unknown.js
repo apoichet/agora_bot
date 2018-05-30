@@ -2,8 +2,8 @@ module.exports = (bot) => {
 
   bot.dialog('unknown', [
     (session, args, next) => {
-      session.endDialog(['Désolé je ne comprends pas']);
+      session.endDialog(["Je n'ai pas compris, vous pouvez réessayer ?"]);
     }
-  ]).triggerAction({matches: 'unknown'})
+  ]).triggerAction({matches: 'wrong_answer'})
 
 };

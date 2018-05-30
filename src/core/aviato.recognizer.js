@@ -15,20 +15,19 @@ class AviatoRecognizer{
   }
 
   async recognize(context, done){
-
+    console.log('appel nlp');
     this._options.body.message = context.message.text.replace(config.talkbot, '').trim();
-
-    request(this._options)
-    .then(response =>
-    {
+    const response = await request(this._options);
+    if (response){
+      console.log('reponse nlp',response);
       done(null, {
         score: response.intentProbability || 1,
-        intent: response.intent,
+        intent: response.intent || 'unknown',
         params: response.entities,
         userId: context.message.user.id,
         conversationId: context.message.address.conversation.id
       });
-    })
+    }
   }
 }
 

@@ -1,7 +1,9 @@
 class Journey{
-  
-  constructor(){
 
+  constructor(origin, destination, datetime){
+    this.origin = origin;
+    this.destination = destination;
+    this.datetime = datetime
   }
 
   isComplete(){
@@ -16,3 +18,5 @@ class Journey{
 
 
 }
+
+module.exports = Journey;
