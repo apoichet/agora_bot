@@ -14,7 +14,7 @@ module.exports = (bot) => {
       .text(Me[Math.floor(Math.random() * Me.length)])
       .images([builder.CardImage.create(session, config.image.url)])]);
     session.send(me);
-    session.beginDialog('confirmTravel');
+    session.beginDialog('confirmJourney');
   }).triggerAction({matches: ['help','who_are_you']});
 
 };

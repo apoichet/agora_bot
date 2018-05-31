@@ -3,25 +3,25 @@ const builder = require('botbuilder');
 module.exports = (bot) => {
 
   //Confirme
-  bot.dialog('confirmTravel', session => {
-    builder.Prompts.choice(session, "On fait un voyage ?", "Oui|Non", { listStyle: builder.ListStyle.button });
+  bot.dialog('confirmJourney', session => {
+    builder.Prompts.choice(session, "On organise un voyage depuis Paris ?", "Oui|Non", { listStyle: builder.ListStyle.button });
   })
-  .triggerAction({matches: ['confirmTravel', 'inspiration']});
+  .triggerAction({matches: ['confirmJourney', 'inspiration', 'reservation']});
 
   //Start
-  bot.dialog('startTravel',
+  bot.dialog('startJourney',
       (session, args, next) => {
         console.log('On démarre le voyage');
-        builder.Prompts.choice(session, "Quelle destination ?", "Lyon|Lille|Bordeaux", { listStyle: builder.ListStyle.button });
+        session.beginDialog('askDestination');
+        //session.beginDialog('askDateDeparture');
+        /*builder.Prompts.choice(session, "Quelle destination ?", "Lyon|Lille|Bordeaux", { listStyle: builder.ListStyle.button });
         builder.Prompts.choice(session, "Pour quand ?", "Aujourd'hui|Demain|Après demain", { listStyle: builder.ListStyle.button });
-        builder.Prompts.choice(session, "Quel Prix ?", "Moins de 50€|Entre 50 et 100€|Plus de 100€", { listStyle: builder.ListStyle.button });
-        session.conversationData.journey = {};
+        builder.Prompts.choice(session, "Quel Prix ?", "Moins de 50€|Entre 50 et 100€|Plus de 100€", { listStyle: builder.ListStyle.button });*/
       }
   );
 
   //Complete
-  bot.dialog('completeTravel', [
-    (session, args, next) => {
+  bot.dialog('completeJourney', [(session, args, next) => {
 
       //Recuperation du prompt
       const promptJourney = session.message.sourceEvent.callback_query;
