@@ -5,9 +5,11 @@ const unknown = require('./unknown');
 const agreement = require('./agreement');
 const gratitude = require('./gratitude');
 const joke = require('./joke');
-const travel = require('./travel');
 const confirmation = require('./confirmation');
 const destination = require('./travel/destination');
+const datetime = require('./travel/datetime');
+const price = require('./travel/price');
+const travelmanager = require('./travel/travelmanager');
 const mistake = require('./mistake');
 
 module.exports = {me,
@@ -17,8 +19,10 @@ module.exports = {me,
   gratitude,
   agreement,
   joke,
-  travel,
+  travelmanager,
   confirmation,
   destination,
+  datetime,
+  price,
   mistake};
 

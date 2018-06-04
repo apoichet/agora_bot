@@ -9,7 +9,7 @@ module.exports = (bot) => {
     let greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
     session.send(greeting + user.first_name);
     if (!session.conversationData.journey){
-      session.beginDialog('confirmJourney');
+      session.beginDialog('confirmTravel');
     }
   }).triggerAction({matches: 'greetings'});
 

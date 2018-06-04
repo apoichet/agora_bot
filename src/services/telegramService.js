@@ -25,7 +25,7 @@ class TelegramService{
   async getChatMembersCount(chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatMembersCount?chat_id=${chatId}`;
     const response = await request(this._options);
-    return response.result;
+    return response.result - 1;//On soustrait le chat bot
   }
 
 }

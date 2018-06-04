@@ -2,37 +2,55 @@ const builder = require('botbuilder');
 const conversations = require('../conversations');
 const config = require('../config/index');
 const NlpFactory = require('../core/nlpfactory');
+const telegramService = require('../services/telegramService');
 
 module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
   let nlp = NlpFactory.create(NlpFactory.AVIATO);
 
+  //Start conversation
+  bot.dialog('firstRun', async (session) => {
+    session.conversationData.chatMembersCount = await telegramService.getChatMembersCount(session.message.address.conversation.id);
+    console.log("Nbr chat member", session.conversationData.chatMembersCount);
+  });
+
   //Entry point
   bot.use({
     botbuilder: (session, next) => {
-
       //Call NLP
-      if (session.message.text.includes(config.talkbot)
-          || session.message.text === 'Oui'
-          || session.message.text === 'Non'){
-
+      if (session.message.text.includes(config.talkbot)){
         next();
       }
-      
+
+      if (session.message.text === 'Oui' && !session.conversationData.travel){
+        session.beginDialog('confirmationYes')
+      }
+
+      if (session.message.text === 'Non' && !session.conversationData.travel){
+        session.beginDialog('confirmationNo')
+      }
+
       //Cancel conversation
       if (session.message.text.match(/^annulation$/i)){
         console.log('Annulation de la réservation');
         session.endConversation('Ok on annule et on stoppe la conversation');
       }
 
-     /* //Session journey
-      if (session.conversationData.journey){
-        session.beginDialog('completeJourney');
-      }*/
+      //Session travel
+      if (session.conversationData.travel && !(session.message.text === 'Oui' || session.message.text === 'Non')){
+        session.beginDialog('manageTravel');
+      }
 
     }});
 
+  //Recognize with NLP
   bot.recognizer(nlp);
+
+  //Coversation Update
+  bot.on("conversationUpdate", (session) => {
+    session.conversationData.chatMembersCount = telegramService.getChatMembersCount(session.message.address.conversation.id);
+    console.log("Nbr chat member", session.conversationData.chatMembersCount);
+  });
 
   //Unknown intent
   bot.dialog('/', (session, args, next) => {

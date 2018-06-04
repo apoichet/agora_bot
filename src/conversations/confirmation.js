@@ -4,16 +4,15 @@ module.exports = (bot) => {
 
     const promptConfirm = session.message.sourceEvent.callback_query;
 
+    console.debug("Réponse positive du prompt de confirmation ",promptConfirm);
     if (promptConfirm){
 
       if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?'){
-        //Nouvelle session
-        session.conversationData.journey = {};
-        session.beginDialog("startJourney");
+        session.beginDialog("startTravel");
       }
 
       if (promptConfirm.message.text === "C'est bon pour tout le monde ?"){
-        session.send("Ok on va faire des propositions");
+        session.send("Ok c'est parti !");
       }
     }
   }).triggerAction({matches: 'yes'});
@@ -21,16 +20,22 @@ module.exports = (bot) => {
   bot.dialog('confirmationNo', (session, args, next) => {
     
     const promptConfirm = session.message.sourceEvent.callback_query;
-    
+    console.debug("Réponse négative du prompt de confirmation ",promptConfirm);
     if (promptConfirm){
 
       if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?'){
-        session.endConversation('Ok Dommage !');
+        session.send("Navré mais pour cette version nous allons devoir organiser le voyage depuis Paris :( ");
+        session.replaceDialog("confirmTravel")
+      }
+
+      if (promptConfirm.message.text === "C'est bon pour tout le monde ?"){
+        session.send("Ok on annule et on recommence");
+        session.conversationData.travel = undefined;//On vide le voyage rattaché à la session
+        session.beginDialog("startTravel")
+
       }
 
     }
-
-
   }).triggerAction({matches: 'no'})
 
 };
