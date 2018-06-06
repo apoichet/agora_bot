@@ -30,7 +30,7 @@ module.exports = (bot) => {
 
       if (promptConfirm.message.text === "C'est bon pour tout le monde ?"){
         session.send("Ok on annule et on recommence");
-        session.conversationData.travel = undefined;//On vide le voyage rattaché à la session
+        session.conversationData.travelform = undefined;//On vide le voyage rattaché à la session
         session.beginDialog("startTravel")
 
       }

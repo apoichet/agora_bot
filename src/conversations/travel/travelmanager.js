@@ -13,7 +13,7 @@ module.exports = (bot) => {
   bot.dialog('startTravel',
       (session, args, next) => {
         console.log('On démarre le voyage');
-        session.conversationData.travel = {};
+        session.conversationData.travelform = {};
         session.beginDialog('askDestination');
       }
   );
@@ -28,16 +28,16 @@ module.exports = (bot) => {
 
     if (promptTravel){
 
-      if (!session.conversationData.travel.travelers){
-        session.conversationData.travel.travelers = [];
+      if (!session.conversationData.travelform.travelers){
+        session.conversationData.travelform.travelers = [];
       }
 
       let traveler;
 
-      for (let iter = 0; iter < session.conversationData.travel.travelers.length; iter++) {
-        if (session.conversationData.travel.travelers[iter]){
-          if (session.conversationData.travel.travelers[iter].id === promptTravel.from.id){
-            traveler = session.conversationData.travel.travelers[iter];
+      for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
+        if (session.conversationData.travelform.travelers[iter]){
+          if (session.conversationData.travelform.travelers[iter].id === promptTravel.from.id){
+            traveler = session.conversationData.travelform.travelers[iter];
             break;
           }
         }
@@ -45,20 +45,20 @@ module.exports = (bot) => {
 
       if (!traveler){
         traveler = {id:promptTravel.from.id, firstName:promptTravel.from.first_name};
-        session.conversationData.travel.travelers.push(traveler);
+        session.conversationData.travelform.travelers.push(traveler);
       }
 
       //User choice
       session.send(traveler.firstName+" a choisi "+promptTravel.data);
 
       // --------------------- Choix Destination --------------------------------------------------------------
-      console.debug("Verrou destination",session.conversationData.travel.destination);
-      if (session.conversationData.travel.destination && promptTravel.message.text === 'Quelle destination ?'){
+      console.debug("Verrou destination",session.conversationData.travelform.destination);
+      if (session.conversationData.travelform.destination && promptTravel.message.text === 'Quelle destination ?'){
         traveler.destination = promptTravel.data;
         console.debug("Choix de la destination",traveler.destination);
         let count = 0;
-        for (let iter = 0; iter < session.conversationData.travel.travelers.length; iter++) {
-          if (session.conversationData.travel.travelers[iter].destination){
+        for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
+          if (session.conversationData.travelform.travelers[iter].destination){
             count++;
           }
         }
@@ -71,13 +71,13 @@ module.exports = (bot) => {
       }
 
       // --------------------- Choix Date --------------------------------------------------------------
-      console.debug("Verrou date",session.conversationData.travel.datetime);
-      if (session.conversationData.travel.datetime && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?'){
+      console.debug("Verrou date",session.conversationData.travelform.datetime);
+      if (session.conversationData.travelform.datetime && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?'){
         traveler.datetime = promptTravel.data;
         console.debug("Choix de la date",traveler.datetime);
         let count = 0;
-        for (let iter = 0; iter < session.conversationData.travel.travelers.length; iter++) {
-          if (session.conversationData.travel.travelers[iter].datetime){
+        for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
+          if (session.conversationData.travelform.travelers[iter].datetime){
             count++;
           }
         }
@@ -89,7 +89,7 @@ module.exports = (bot) => {
 
       }
 
-      console.log(session.conversationData.travel.travelers);
+      console.log(session.conversationData.travelform.travelers);
 
     }
   },

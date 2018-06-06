@@ -5,8 +5,8 @@ module.exports = (bot) => {
 
   bot.dialog('askDateDeparture',
       (session, args, next) => {
-        session.conversationData.travel.destination = false;
-        session.conversationData.travel.datetime = true;
+        session.conversationData.travelform.destination = false;
+        session.conversationData.travelform.datetime = true;
 
         let momentFriday = moment().day('friday');
         let friday = momentFriday.format("DD/MM");

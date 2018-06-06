@@ -16,11 +16,11 @@ module.exports = (connector) => {
         next();
       }
 
-      if (session.message.text === 'Oui' && !session.conversationData.travel){
+      if (session.message.text === 'Oui' && !session.conversationData.travelform){
         session.beginDialog('confirmationYes')
       }
 
-      if (session.message.text === 'Non' && !session.conversationData.travel){
+      if (session.message.text === 'Non' && !session.conversationData.travelform){
         session.beginDialog('confirmationNo')
       }
 
@@ -31,7 +31,7 @@ module.exports = (connector) => {
       }
 
       //Session travel
-      if (session.conversationData.travel && !(session.message.text === 'Oui' || session.message.text === 'Non')){
+      if (session.conversationData.travelform && !(session.message.text === 'Oui' || session.message.text === 'Non')){
         session.beginDialog('manageTravel');
       }
 
