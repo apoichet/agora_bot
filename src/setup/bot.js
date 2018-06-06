@@ -8,12 +8,6 @@ module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
   let nlp = NlpFactory.create(NlpFactory.AVIATO);
 
-  //Start conversation
-  bot.dialog('firstRun', async (session) => {
-    session.conversationData.chatMembersCount = await telegramService.getChatMembersCount(session.message.address.conversation.id);
-    console.log("Nbr chat member", session.conversationData.chatMembersCount);
-  });
-
   //Entry point
   bot.use({
     botbuilder: (session, next) => {
