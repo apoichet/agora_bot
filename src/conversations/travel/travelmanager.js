@@ -51,6 +51,7 @@ module.exports = (bot) => {
       //User choice
       session.send(traveler.firstName+" a choisi "+promptTravel.data);
 
+      // --------------------- Choix Destination --------------------------------------------------------------
       console.debug("Verrou destination",session.conversationData.travel.destination);
       if (session.conversationData.travel.destination && promptTravel.message.text === 'Quelle destination ?'){
         traveler.destination = promptTravel.data;
@@ -65,6 +66,25 @@ module.exports = (bot) => {
 
         if (count  === session.conversationData.chatMembersCount){
           session.beginDialog("askDateDeparture")
+        }
+
+      }
+
+      // --------------------- Choix Date --------------------------------------------------------------
+      console.debug("Verrou date",session.conversationData.travel.datetime);
+      if (session.conversationData.travel.datetime && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?'){
+        traveler.datetime = promptTravel.data;
+        console.debug("Choix de la date",traveler.datetime);
+        let count = 0;
+        for (let iter = 0; iter < session.conversationData.travel.travelers.length; iter++) {
+          if (session.conversationData.travel.travelers[iter].datetime){
+            count++;
+          }
+        }
+        console.debug("Nombre de réponses",count);
+
+        if (count  === session.conversationData.chatMembersCount){
+          session.beginDialog("askPrice")
         }
 
       }

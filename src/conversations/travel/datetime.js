@@ -1,4 +1,5 @@
 const builder = require('botbuilder');
+const moment = require('moment');
 
 module.exports = (bot) => {
 
@@ -6,7 +7,13 @@ module.exports = (bot) => {
       (session, args, next) => {
         session.conversationData.travel.destination = false;
         session.conversationData.travel.datetime = true;
-        builder.Prompts.choice(session, "Pour quand ?", "Aujourd'hui|Demain|Après demain", { listStyle: builder.ListStyle.button });
+
+        let momentFriday = moment().day('friday');
+        let friday = momentFriday.format("DD/MM");
+        let nextFriday = momentFriday.add(7, 'days').format("DD/MM");
+        let afterNextFriday = momentFriday.add(7, 'days').format("DD/MM");
+
+        builder.Prompts.choice(session, "Quel Vendredi soir (à partir de 18h) ?", friday +"|"+nextFriday +"|"+afterNextFriday, {listStyle: builder.ListStyle.button });
       }
   );
 
