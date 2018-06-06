@@ -14,6 +14,7 @@ module.exports = (connector) => {
       //Call NLP
       if (session.message.text.includes(config.talkbot)){
         next();
+        session.sendTyping();
       }
 
       if (session.message.text === 'Oui'){
