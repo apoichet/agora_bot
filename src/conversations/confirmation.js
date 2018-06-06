@@ -7,12 +7,15 @@ module.exports = (bot) => {
     console.debug("Réponse positive du prompt de confirmation ",promptConfirm);
     if (promptConfirm){
 
-      if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?'){
+      if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?' && !session.conversationData.travelform){
         session.beginDialog("startTravel");
       }
 
-      if (promptConfirm.message.text === "C'est bon pour tout le monde ?"){
+      if (promptConfirm.message.text === "Merci pour vos choix, c'est bon pour tout le monde ?" && session.conversationData.travelform){
+        session.conversationData.travelers = session.conversationData.travelform.travelers;//On stock le choix des utilisateurs
+        session.conversationData.travelform = undefined;//On vide le formulaire
         session.send("Ok c'est parti !");
+        //Appel au moteur de proposition
       }
     }
   }).triggerAction({matches: 'yes'});
@@ -23,15 +26,14 @@ module.exports = (bot) => {
     console.debug("Réponse négative du prompt de confirmation ",promptConfirm);
     if (promptConfirm){
 
-      if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?'){
+      if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?' && !session.conversationData.travelform){
         session.send("Navré mais pour cette version nous allons devoir organiser le voyage depuis Paris :( ");
         session.replaceDialog("confirmTravel")
       }
 
       if (promptConfirm.message.text === "C'est bon pour tout le monde ?"){
         session.send("Ok on annule et on recommence");
-        session.conversationData.travelform = undefined;//On vide le voyage rattaché à la session
-        session.beginDialog("startTravel")
+        session.replaceDialog("startTravel")
 
       }
 

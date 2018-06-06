@@ -89,6 +89,25 @@ module.exports = (bot) => {
 
       }
 
+      // --------------------- Choix Prix --------------------------------------------------------------
+      console.debug("Verrou prix",session.conversationData.travelform.price);
+      if (session.conversationData.travelform.price && promptTravel.message.text === 'Quel prix ?'){
+        traveler.price = promptTravel.data;
+        console.debug("Choix du prix",traveler.price);
+        let count = 0;
+        for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
+          if (session.conversationData.travelform.travelers[iter].price){
+            count++;
+          }
+        }
+        console.debug("Nombre de réponses",count);                                 
+
+        if (count  === session.conversationData.chatMembersCount){
+          builder.Prompts.choice(session, "Merci pour vos choix, c'est bon pour tout le monde ?", "Oui|Non", { listStyle: builder.ListStyle.button });
+        }
+
+      }
+
       console.log(session.conversationData.travelform.travelers);
 
     }

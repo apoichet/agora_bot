@@ -16,11 +16,11 @@ module.exports = (connector) => {
         next();
       }
 
-      if (session.message.text === 'Oui' && !session.conversationData.travelform){
+      if (session.message.text === 'Oui'){
         session.beginDialog('confirmationYes')
       }
 
-      if (session.message.text === 'Non' && !session.conversationData.travelform){
+      if (session.message.text === 'Non'){
         session.beginDialog('confirmationNo')
       }
 
