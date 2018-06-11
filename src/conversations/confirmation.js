@@ -1,6 +1,8 @@
+const propositionEngine = require('../services/propositionEngine');
+
 module.exports = (bot) => {
 
-  bot.dialog('confirmationYes', (session, args, next) => {
+  bot.dialog('confirmationYes', async (session, args, next) => {
 
     const promptConfirm = session.message.sourceEvent.callback_query;
 
@@ -15,7 +17,17 @@ module.exports = (bot) => {
         session.conversationData.travelers = session.conversationData.travelform.travelers;//On stock le choix des utilisateurs
         session.conversationData.travelform = undefined;//On vide le formulaire
         session.send("Ok c'est parti !");
+        session.sendTyping();
+
         //Appel au moteur de proposition
+        let propositions = await propositionEngine.buildPropositions(session.conversationData.travelers);
+        session.send("Voila ce que je vous propose");
+        let compteurProposition = 0;
+        propositions.forEach(prop => {
+          compteurProposition++;
+          session.send("Numéro "+compteurProposition+" - Destination : "+prop.destination+" - Date : "+prop.departureDate+" - Prix : "+prop.price);
+        })
+
       }
     }
   }).triggerAction({matches: 'yes'});

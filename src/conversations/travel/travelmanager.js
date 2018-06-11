@@ -71,13 +71,13 @@ module.exports = (bot) => {
       }
 
       // --------------------- Choix Date --------------------------------------------------------------
-      console.debug("Verrou date",session.conversationData.travelform.datetime);
-      if (session.conversationData.travelform.datetime && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?'){
-        traveler.datetime = promptTravel.data;
-        console.debug("Choix de la date",traveler.datetime);
+      console.debug("Verrou date",session.conversationData.travelform.date);
+      if (session.conversationData.travelform.date && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?'){
+        traveler.date = promptTravel.data;
+        console.debug("Choix de la date",traveler.date);
         let count = 0;
         for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
-          if (session.conversationData.travelform.travelers[iter].datetime){
+          if (session.conversationData.travelform.travelers[iter].date){
             count++;
           }
         }

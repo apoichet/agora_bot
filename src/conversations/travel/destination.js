@@ -1,12 +1,14 @@
 const builder = require('botbuilder');
+const propositionEngine = require('../../services/propositionEngine');
 
 module.exports = (bot) => {
 
   bot.dialog('askDestination',
-      (session, args, next) => {
+      async (session, args, next) => {
         //On vérouille
         session.conversationData.travelform.destination = true;
-        builder.Prompts.choice(session, "Quelle destination ?", "Lyon|Marseille|Bordeaux", { listStyle: builder.ListStyle.button });
+        let destinations = await propositionEngine.getDestinations();
+        builder.Prompts.choice(session, "Quelle destination ?", destinations.join('|'), { listStyle: builder.ListStyle.button });
       }
   );
 

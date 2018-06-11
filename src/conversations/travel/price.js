@@ -1,12 +1,14 @@
 const builder = require('botbuilder');
+const propositionEngine = require('../../services/propositionEngine');
 
 module.exports = (bot) => {
 
   bot.dialog('askPrice',
-      (session, args, next) => {
+      async (session, args, next) => {
         session.conversationData.travelform.datetime = false;
         session.conversationData.travelform.price = true;
-        builder.Prompts.choice(session, "Quel prix ?", "Moins de 50€|Moins de 80€|Plus de 80€", { listStyle: builder.ListStyle.button });
+        let prices = await propositionEngine.getPrices();
+        builder.Prompts.choice(session, "Quel prix ?", prices.join('|'), { listStyle: builder.ListStyle.button });
       }
   );
 

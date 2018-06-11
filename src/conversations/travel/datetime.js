@@ -1,19 +1,14 @@
 const builder = require('botbuilder');
-const moment = require('moment');
+const propositionEngine = require('../../services/propositionEngine');
 
 module.exports = (bot) => {
 
   bot.dialog('askDateDeparture',
-      (session, args, next) => {
+      async (session, args, next) => {
         session.conversationData.travelform.destination = false;
         session.conversationData.travelform.datetime = true;
-
-        let momentFriday = moment().day('friday');
-        let friday = momentFriday.format("DD/MM");
-        let nextFriday = momentFriday.add(7, 'days').format("DD/MM");
-        let afterNextFriday = momentFriday.add(7, 'days').format("DD/MM");
-
-        builder.Prompts.choice(session, "Quel Vendredi soir (à partir de 18h) ?", friday +"|"+nextFriday +"|"+afterNextFriday, {listStyle: builder.ListStyle.button });
+        let departures = await propositionEngine.getDepartures();
+        builder.Prompts.choice(session, "Quel Vendredi soir (à partir de 18h) ?", departures.join('|'), {listStyle: builder.ListStyle.button });
       }
   );
 
