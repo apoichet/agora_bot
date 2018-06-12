@@ -1,4 +1,4 @@
-const telegramService = require('../services/telegramService');
+const telegramService = require('../../services/telegramService');
 
 module.exports = (bot) => {
   bot.dialog('insult', [

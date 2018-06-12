@@ -1,4 +1,4 @@
-const telegramService = require('../services/telegramService');
+const telegramService = require('../../services/telegramService');
 const WELCOM = ["De rien ", "C'est un plaisir ", 'A votre service ', 'Je ne fais que mon devoir '];
 
 module.exports = (bot) => {

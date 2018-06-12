@@ -1,4 +1,4 @@
-const propositionEngine = require('../services/propositionEngine');
+const propositionEngine = require('../../services/propositionEngine');
 
 module.exports = (bot) => {
 
