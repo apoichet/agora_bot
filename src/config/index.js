@@ -5,12 +5,12 @@ const env = process.env.NODE_ENV;
 
 const config = {
   _default,
-  developpement
+  developpement,
 };
 
 let configObj = config._default;
 
-if (config[env]){
+if (config[env]) {
   configObj = _.merge(configObj, config[env]);
 }
 
