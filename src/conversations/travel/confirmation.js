@@ -16,18 +16,8 @@ module.exports = (bot) => {
       if (promptConfirm.message.text === "Merci pour vos choix, c'est bon pour tout le monde ?" && session.conversationData.travelform){
         session.conversationData.travelers = session.conversationData.travelform.travelers;//On stock le choix des utilisateurs
         session.conversationData.travelform = undefined;//On vide le formulaire
-        session.send("Ok c'est parti !");
-        session.sendTyping();
 
-        //Appel au moteur de proposition
-        let propositions = await propositionEngine.buildPropositions(session.conversationData.travelers);
-        session.send("Voila ce que je vous propose");
-        let compteurProposition = 0;
-        propositions.forEach(prop => {
-          compteurProposition++;
-          session.send("Numéro "+compteurProposition+" - Destination : "+prop.destination+" - Date : "+prop.departureDate+" - Prix : "+prop.price);
-        })
-
+        session.beginDialog("proposition");
       }
     }
   }).triggerAction({matches: 'yes'});
