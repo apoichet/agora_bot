@@ -11,7 +11,7 @@ class PropositionEngine{
 
   async getDestinations() {
     this._options.method = 'get';
-    this._options.url = 'http://192.168.75.129:8080/agora/proposition/destinations';
+    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/destinations`;
     const response = await request(this._options);
     console.log(response);
     return response;
@@ -19,21 +19,21 @@ class PropositionEngine{
 
   async getDepartures() {
     this._options.method = 'get';
-    this._options.url = 'http://192.168.75.129:8080/agora/proposition/departures';
+    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/departures`;
     const response = await request(this._options);
     return response;
   }
 
   async getPrices() {
     this._options.method = 'get';
-    this._options.url = 'http://192.168.75.129:8080/agora/proposition/prices';
+    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/prices`;
     const response = await request(this._options);
     return response;
   }
 
   async buildPropositions(travelerChoices) {
     this._options.method = 'post';
-    this._options.url = 'http://192.168.75.129:8080/agora/proposition/build';
+    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/build`;
     this._options.body = travelerChoices;
     const response = await request(this._options);
     return response;

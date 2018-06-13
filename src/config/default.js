@@ -30,15 +30,19 @@ module.exports = {
     }
   },
   platforms:{
-     botframework: {
-       id: '10e3ff27-5b1a-43b5-958b-b62e3b06ec57',
-       token: 'vgkbmVFH200^=mbAQAT53[+'
-     },
+    botframework: {
+      id: '10e3ff27-5b1a-43b5-958b-b62e3b06ec57',
+      token: 'vgkbmVFH200^=mbAQAT53[+'
+    },
     messenger: {
-       token:'EAACuB417oB0BAEFIOUZAcGYFi9I2PWzZAkUpZAV7rjZCunQsIGgmRdfhDZA0JryLQpVQmjKjj7bNsf7TfHumeS4Ita7OUxA6KydK4jHaiiDTrOBHi2a30g96vr6AiikmEaJoHLVi93xtXoLWlzBm0zlxZAZCFG5htkkygETC9YLbgZDZD'
+      token:'EAACuB417oB0BAEFIOUZAcGYFi9I2PWzZAkUpZAV7rjZCunQsIGgmRdfhDZA0JryLQpVQmjKjj7bNsf7TfHumeS4Ita7OUxA6KydK4jHaiiDTrOBHi2a30g96vr6AiikmEaJoHLVi93xtXoLWlzBm0zlxZAZCFG5htkkygETC9YLbgZDZD'
     },
     telegram: {
-       token:'501507889:AAHzo-Mk7Bdzr9r7XU_m-aQkQpRCpc4xz2U'
+      token:'501507889:AAHzo-Mk7Bdzr9r7XU_m-aQkQpRCpc4xz2U'
+    },
+    propositionengine: {
+      ip:'192.168.75.129',
+      port:'8080'
     }
   },
   publicPath: path.join(__dirname, '../server/public'),
