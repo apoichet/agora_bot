@@ -13,6 +13,8 @@ module.exports = (bot) => {
       .text(Me[Math.floor(Math.random() * Me.length)])
       .images([builder.CardImage.create(session, config.image.url)])]);
     session.send(me);
-    session.beginDialog('confirmTravel');
+    if (!session.conversationData.travelform) {
+      session.beginDialog('confirmTravel');
+    }
   }).triggerAction({matches: ['help', 'who_are_you']});
 };
