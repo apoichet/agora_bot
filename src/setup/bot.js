@@ -56,7 +56,9 @@ module.exports = (connector) => {
   // Error occured
   bot.on('error', (session) => {
     console.debug('error', session);
-    session.beginDialog('mistake');
+    if (session) {
+      session.beginDialog('mistake');
+    };
   });
 
   // Assigne les conversations
