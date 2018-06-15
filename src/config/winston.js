@@ -12,6 +12,15 @@ let options = {
     maxFiles: 5,
   },
 };
+
+const customLevels = {
+  levels: {
+    error: 0,
+    debug: 1,
+    info: 2,
+  }
+}
+
 const alignedWithColorsAndTime = format.combine(
     format.colorize(),
     format.timestamp(),
@@ -32,6 +41,7 @@ let logger = createLogger({
     new transports.File(options.file),
     new transports.Console(),
   ],
+  levels: customLevels.levels,
   format: alignedWithColorsAndTime,
   level: 'info',
   exitOnError: false,
@@ -42,7 +52,6 @@ let logger = createLogger({
 logger.stream = {
   write: function(message) {
     // use the 'info' log level so the output will be picked up by both transports (file and console)
-    logger.info(message);
   },
 };
 

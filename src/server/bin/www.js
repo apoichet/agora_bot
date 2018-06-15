@@ -1,5 +1,6 @@
 const app = require('../app');
 const connector = require('../../setup/chat-connector');
+const bot = require('../../setup/bot')(connector);
 const winston = require('../../config/winston');
 
 app.post('/botframework/receive', connector.listen());
