@@ -16,9 +16,7 @@ function sendingPropositions(session, propositions) {
 
 module.exports = (bot) => {
   bot.dialog('proposition', async (session) => {
-    console.debug('Appel moteur de proposition');
     let propositions = await propositionEngine.buildPropositions(session.conversationData.travelers);
-    console.debug('Réponse moteur de proposition', propositions);
 
     // Test égalité des scores de propositions
     if (propositions && propositions.length > 1) {

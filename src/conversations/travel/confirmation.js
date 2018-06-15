@@ -1,8 +1,9 @@
+const winston = require('../../config/winston');
+
 module.exports = (bot) => {
   bot.dialog('confirmationYes', async (session) => {
     const promptConfirm = session.message.sourceEvent.callback_query;
-
-    console.debug('Réponse positive du prompt de confirmation ', promptConfirm);
+    winston.debug('Réponse positive du prompt de confirmation ', promptConfirm);
     if (promptConfirm) {
       if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?' && !session.conversationData.travelform) {
         session.beginDialog('startTravel');
@@ -21,7 +22,7 @@ module.exports = (bot) => {
 
   bot.dialog('confirmationNo', (session) => {
     const promptConfirm = session.message.sourceEvent.callback_query;
-    console.debug('Réponse négative du prompt de confirmation ', promptConfirm);
+    winston.debug('Réponse négative du prompt de confirmation ', promptConfirm);
     if (promptConfirm) {
       if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?' && !session.conversationData.travelform) {
         session.send('Navré mais pour cette version nous allons devoir organiser le voyage depuis Paris :( ');

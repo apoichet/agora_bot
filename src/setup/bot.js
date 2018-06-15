@@ -4,6 +4,7 @@ const conversations = require('../conversations');
 const config = require('../config/index');
 const NlpFactory = require('../core/nlpfactory');
 const telegramService = require('../services/telegramService');
+const winston = require('../config/winston');
 
 module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
@@ -28,7 +29,7 @@ module.exports = (connector) => {
 
       // Cancel conversation
       if (session.message.text.match(/^annulation$/i)) {
-        console.log('Annulation de la réservation');
+        winston.info('Annulation de la réservation');
         session.endConversation('Ok on annule et on stoppe la conversation');
       }
 
@@ -44,18 +45,17 @@ module.exports = (connector) => {
   // Coversation Update
   bot.on('conversationUpdate', (session) => {
     session.conversationData.chatMembersCount = telegramService.getChatMembersCount(session.message.address.conversation.id);
-    console.debug('Nbr chat member', session.conversationData.chatMembersCount);
   });
 
   // Unknown intent
   bot.dialog('/', (session, args) => {
-    console.debug('Intention inconnue : ', args);
+    winston.info('Intention inconnue : ', args);
     session.beginDialog('unknown');
   });
 
   // Error occured
   bot.on('error', (session) => {
-    console.debug('error', session);
+    winston.error('error', session);
     if (session) {
       session.beginDialog('mistake');
     };

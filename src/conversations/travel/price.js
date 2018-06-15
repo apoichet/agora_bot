@@ -4,6 +4,7 @@ const propositionEngine = require('../../services/propositionEngine');
 module.exports = (bot) => {
   bot.dialog('askPrice',
       async (session) => {
+        // On verouille
         session.conversationData.travelform.datetime = false;
         session.conversationData.travelform.price = true;
         let prices = await propositionEngine.getPrices();

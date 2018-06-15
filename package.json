@@ -12,12 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "apiai": "^4.0.3",
+    "app-root-path": "^2.0.1",
     "body-parser": "~1.18.2",
     "botbuilder": "~3.12.0",
     "eslint": "^4.19.1",
     "express": "~4.16.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
+    "morgan": "^1.9.0",
     "request-promise": "^4.2.2",
     "request-promise-native": "^1.0.5",
     "uuid": "^3.2.1"
@@ -27,6 +29,7 @@
     "eslint-config-google": "^0.9.1",
     "mocha": "^5.1.1",
     "supertest": "^3.0.0",
-    "supervisor": "^0.12.0"
+    "supervisor": "^0.12.0",
+    "winston": "^3.0.0"
   }
 }

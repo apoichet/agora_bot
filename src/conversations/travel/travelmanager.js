@@ -1,5 +1,6 @@
 const builder = require('botbuilder');
 const telegramService = require('../../services/telegramService');
+const winston = require('../../config/winston');
 
 module.exports = (bot) => {
   // Confirme
@@ -11,7 +12,7 @@ module.exports = (bot) => {
   // Start
   bot.dialog('startTravel',
       (session) => {
-        console.log('On démarre le voyage');
+        winston.info('On démarre le voyage');
         session.conversationData.travelform = {};
         session.beginDialog('askDestination');
       }
@@ -49,17 +50,17 @@ module.exports = (bot) => {
       session.send(traveler.firstName+' a choisi '+promptTravel.data);
 
       // --------------------- Choix Destination --------------------------------------------------------------
-      console.debug('Verrou destination', session.conversationData.travelform.destination);
+      winston.debug('Verrou destination', session.conversationData.travelform.destination);
       if (session.conversationData.travelform.destination && promptTravel.message.text === 'Quelle destination ?') {
         traveler.destination = promptTravel.data;
-        console.debug('Choix de la destination', traveler.destination);
+        winston.debug('Choix de la destination', traveler.destination);
         let count = 0;
         for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
           if (session.conversationData.travelform.travelers[iter].destination) {
             count++;
           }
         }
-        console.debug('Nombre de réponses', count);
+        winston.debug('Nombre de réponses', count);
 
         if (count === session.conversationData.chatMembersCount) {
           session.beginDialog('askDateDeparture');
@@ -67,17 +68,17 @@ module.exports = (bot) => {
       }
 
       // --------------------- Choix Date --------------------------------------------------------------
-      console.debug('Verrou date', session.conversationData.travelform.date);
+      winston.debug('Verrou date', session.conversationData.travelform.date);
       if (session.conversationData.travelform.date && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?') {
         traveler.date = promptTravel.data;
-        console.debug('Choix de la date', traveler.date);
+        winston.debug('Choix de la date', traveler.date);
         let count = 0;
         for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
           if (session.conversationData.travelform.travelers[iter].date) {
             count++;
           }
         }
-        console.debug('Nombre de réponses', count);
+        winston.debug('Nombre de réponses', count);
 
         if (count === session.conversationData.chatMembersCount) {
           session.beginDialog('askPrice');
@@ -85,24 +86,24 @@ module.exports = (bot) => {
       }
 
       // --------------------- Choix Prix --------------------------------------------------------------
-      console.debug('Verrou prix', session.conversationData.travelform.price);
+      winston.debug('Verrou prix', session.conversationData.travelform.price);
       if (session.conversationData.travelform.price && promptTravel.message.text === 'Quel prix ?') {
         traveler.price = promptTravel.data;
-        console.debug('Choix du prix', traveler.price);
+        winston.debug('Choix du prix', traveler.price);
         let count = 0;
         for (let iter = 0; iter < session.conversationData.travelform.travelers.length; iter++) {
           if (session.conversationData.travelform.travelers[iter].price) {
             count++;
           }
         }
-        console.debug('Nombre de réponses', count);
+        winston.debug('Nombre de réponses', count);
 
         if (count === session.conversationData.chatMembersCount) {
           builder.Prompts.choice(session, 'Merci pour vos choix, c\'est bon pour tout le monde ?', 'Oui|Non', {listStyle: builder.ListStyle.button});
         }
       }
 
-      console.debug('Travelers', session.conversationData.travelform.travelers);
+      winston.debug('Travelers', session.conversationData.travelform.travelers);
     }
   },
   ]);
