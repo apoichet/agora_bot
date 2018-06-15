@@ -11,6 +11,7 @@ const datetime = require('./travel/datetime');
 const price = require('./travel/price');
 const travelmanager = require('./travel/travelmanager');
 const mistake = require('./extras/mistake');
+const proposition = require('./travel/proposition');
 
 module.exports = {me,
   greetings,
@@ -24,5 +25,6 @@ module.exports = {me,
   destination,
   datetime,
   price,
-  mistake};
+  mistake,
+  proposition};
 

@@ -22,7 +22,7 @@ class PropositionEngine {
   async getDestinations() {
     this._options.method = 'get';
     this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/destinations`;
-    winston.info('Appel proposition engine', this._options);
+    winston.info(`Appel proposition engine ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse proposition engine', response);
     return response;
@@ -35,7 +35,7 @@ class PropositionEngine {
   async getDepartures() {
     this._options.method = 'get';
     this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/departures`;
-    winston.info('Appel proposition engine', this._options);
+    winston.info(`Appel proposition engine ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse proposition engine', response);
     return response;
@@ -48,7 +48,7 @@ class PropositionEngine {
   async getPrices() {
     this._options.method = 'get';
     this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/prices`;
-    winston.info('Appel proposition engine', this._options);
+    winston.info(`Appel proposition engine ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse proposition engine', response);
     return response;
@@ -63,7 +63,7 @@ class PropositionEngine {
     this._options.method = 'post';
     this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/build`;
     this._options.body = travelerChoices;
-    winston.info('Appel proposition engine', this._options);
+    winston.info(`Appel proposition engine ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse proposition engine', response);
     return response;

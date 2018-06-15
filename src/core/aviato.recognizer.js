@@ -27,12 +27,12 @@ class AviatoRecognizer {
    */
   async recognize(context, done) {
     this._options.body.message = context.message.text.replace(config.talkbot, '').trim();
-    winston.info('appel nlp', this._options);
+    winston.info('appel nlp : '+this._options.body.message);
 
     try {
       const response = await request(this._options);
-      winston.info('reponse nlp', response);
       if (response) {
+        winston.info('reponse intention nlp : '+response.intent);
         done(null, {
           score: response.intentProbability || 1,
           intent: response.intent || 'unknown',

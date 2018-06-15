@@ -10,7 +10,7 @@ function sendingPropositions(session, propositions) {
   let compteurProposition = 0;
   propositions.forEach((prop) => {
     compteurProposition++;
-    session.send('N° ' + compteurProposition + '' - direction + '' + prop.destination + ' le ' + prop.departureDate + ' à ' + prop.price);
+    session.send('N° ' + compteurProposition + ' - direction ' + prop.destination + ' le ' + prop.departureDate + ' à ' + prop.price);
   });
 }
 
