@@ -4,7 +4,7 @@
   "description": "Agora est un bot conversationnel de groupe qui peut gérer les réservations train de groupe via oui.sncnf",
   "main": "./src/server/bin/www",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --timeout=0 ./tests/*.spec.js ",
+    "test": "cross-env NODE_ENV=test mocha --timeout=0 ./tests/*/*.spec.js ",
     "dev": "cross-env NODE_ENV=developpement supervisor ./src/server/bin/www",
     "start": "node ./src/server/bin/www"
   },
@@ -26,9 +26,10 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "cross-env": "^5.1.4",
+    "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "mocha": "^5.1.1",
-    "sinon": "^6.0.0",
+    "sinon": "^1.17.7",
     "sinon-as-promised": "^4.0.3",
     "supertest": "^3.0.0",
     "supervisor": "^0.12.0",

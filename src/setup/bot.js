@@ -56,7 +56,7 @@ module.exports = (connector) => {
   // Error occured
   bot.on('error', (session) => {
     winston.error('error', session);
-    if (session) {
+    if (session && typeof session.beginDialog === 'function') {
       session.beginDialog('mistake');
     };
   });
