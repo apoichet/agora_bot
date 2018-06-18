@@ -24,7 +24,7 @@ class TelegramService {
    */
   async getChatMember(userId, chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatMember?user_id=${userId}&chat_id=${chatId}`;
-    winston.info(`Appel travel service ${this._options.method} ${this._options.url}`);
+    winston.info(`Appel telegram service ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse telegram service : '+response.result.user);
     return response.result.user;
@@ -37,7 +37,7 @@ class TelegramService {
    */
   async getChatMembers(chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatAdministrators?chat_id=${chatId}`;
-    winston.info(`Appel travel service ${this._options.method} ${this._options.url}`);
+    winston.info(`Appel telegram service ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse telegram service', response.result);
     return response.result;
@@ -50,7 +50,7 @@ class TelegramService {
    */
   async getChatMembersCount(chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatMembersCount?chat_id=${chatId}`;
-    winston.info(`Appel travel service ${this._options.method} ${this._options.url}`);
+    winston.info(`Appel telegram service ${this._options.method} ${this._options.url}`);
     const response = await request(this._options);
     winston.info('Reponse telegram service : '+(response.result - 1));
     // On soustrait le chat bot

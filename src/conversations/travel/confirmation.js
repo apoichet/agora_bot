@@ -14,8 +14,12 @@ module.exports = (bot) => {
         session.conversationData.travelers = session.conversationData.travelform.travelers;
         // On vide le formulaire
         session.conversationData.travelform = undefined;
-
         session.beginDialog('proposition');
+      }
+
+      if (promptConfirm.message.text === 'On fait une réservation ?') {
+        session.conversationData.travelers = undefined;
+        session.beginDialog('reservation');
       }
     }
   }).triggerAction({matches: 'yes'});
@@ -29,8 +33,12 @@ module.exports = (bot) => {
         session.replaceDialog('confirmTravel');
       }
 
-      if (promptConfirm.message.text === 'C\'est bon pour tout le monde ?') {
+      if ((promptConfirm.message.text === 'C\'est bon pour tout le monde ?' || promptConfirm.message.text === 'On fait une réservation ?') &&
+          (session.conversationData.travelform || session.conversationData.travelers)) {
         session.send('Ok on annule et on recommence');
+        session.conversationData.travelform = undefined;
+        session.conversationData.travelers = undefined;
+        session.conversationData.propositions = undefined;
         session.replaceDialog('startTravel');
       }
     }
