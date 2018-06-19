@@ -52,11 +52,11 @@ class TelegramService {
   }
 }
 
-callTelgram(async(options) => {
+async function callTelgram(options) {
   winston.info(`Appel telegram service ${options.method} ${options.url}`);
   const response = await request(options);
   winston.info('Reponse telegram service : '+response);
   return response;
-});
+}
 
 module.exports = new TelegramService();

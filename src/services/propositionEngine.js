@@ -58,11 +58,11 @@ class PropositionEngine {
   }
 }
 
-callPropositionEngine(async (options) => {
+async function callPropositionEngine(options) {
   winston.info(`Appel proposition engine ${options.method} ${options.url}`);
   const response = await request(options);
   winston.info('Reponse proposition engine', response);
   return response;
-});
+}
 
 module.exports = new PropositionEngine();
