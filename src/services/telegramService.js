@@ -24,7 +24,7 @@ class TelegramService {
    */
   async getChatMember(userId, chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatMember?user_id=${userId}&chat_id=${chatId}`;
-    const response = callTelgram(this._options);
+    const response = await callTelgram(this._options);
     return response.result.user;
   }
 
@@ -35,7 +35,7 @@ class TelegramService {
    */
   async getChatMembers(chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatAdministrators?chat_id=${chatId}`;
-    const response = callTelgram(this._options);
+    const response = await callTelgram(this._options);
     return response.result;
   }
 
@@ -46,7 +46,7 @@ class TelegramService {
    */
   async getChatMembersCount(chatId) {
     this._options.url = `https://api.telegram.org/bot${config.platforms.telegram.token}/getChatMembersCount?chat_id=${chatId}`;
-    const response = callTelgram(this._options);
+    const response = await callTelgram(this._options);
     // On soustrait le chat bot
     return response.result - 1;
   }

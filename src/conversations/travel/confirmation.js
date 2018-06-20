@@ -33,7 +33,7 @@ module.exports = (bot) => {
         session.replaceDialog('confirmTravel');
       }
 
-      if ((promptConfirm.message.text === 'C\'est bon pour tout le monde ?' || promptConfirm.message.text === 'On fait une réservation ?') &&
+      if ((promptConfirm.message.text === 'Merci pour vos choix, c\'est bon pour tout le monde ?' || promptConfirm.message.text === 'On fait une réservation ?') &&
           (session.conversationData.travelform || session.conversationData.travelers)) {
         session.send('Ok on annule et on recommence');
         session.conversationData.travelform = undefined;
