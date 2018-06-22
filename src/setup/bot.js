@@ -5,6 +5,7 @@ const config = require('../config/index');
 const NlpFactory = require('../core/nlpfactory');
 const telegramService = require('../services/telegramService');
 const winston = require('../config/winston');
+const travelers = require('../conversations/travel/testtraveleres');
 
 module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
@@ -13,6 +14,11 @@ module.exports = (connector) => {
   // Entry point
   bot.use({
     botbuilder: (session, next) => {
+      if (session.message.text === 'test') {
+        session.conversationData.travelers = travelers;
+        session.beginDialog('quote');
+      }
+
       // Call NLP
       if (session.message.text.includes(config.talkbot)) {
         next();

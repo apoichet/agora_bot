@@ -14,7 +14,7 @@ module.exports = (bot) => {
         session.conversationData.travelers = session.conversationData.travelform.travelers;
         // On vide le formulaire
         session.conversationData.travelform = undefined;
-        session.beginDialog('proposition');
+        session.beginDialog('quote');
       }
 
       if (promptConfirm.message.text === 'On fait une réservation ?') {
@@ -38,7 +38,7 @@ module.exports = (bot) => {
         session.send('Ok on annule et on recommence');
         session.conversationData.travelform = undefined;
         session.conversationData.travelers = undefined;
-        session.conversationData.propositions = undefined;
+        session.conversationData.reservation = undefined;
         session.replaceDialog('startTravel');
       }
     }

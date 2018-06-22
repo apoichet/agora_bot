@@ -50,7 +50,7 @@ class PropositionEngine {
    * @param {travelerChoices} travelerChoices
    * @return {Promise<void>}
    */
-  async buildPropositions(travelerChoices) {
+  async buildProposals(travelerChoices) {
     this._options.method = 'post';
     this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/build`;
     this._options.body = travelerChoices;
@@ -61,7 +61,7 @@ class PropositionEngine {
 async function callPropositionEngine(options) {
   winston.info(`Appel proposition engine ${options.method} ${options.url}`);
   const response = await request(options);
-  winston.info('Reponse proposition engine', response);
+  winston.info('Reponse proposition engine : '+response);
   return response;
 }
 

@@ -44,6 +44,9 @@ module.exports = {
       ip: '192.168.75.129',
       port: '8080',
     },
+    nucleus: {
+      url: 'http://nucleus.eu-west-1.elasticbeanstalk.com/'
+    }
   },
   publicPath: path.join(__dirname, '../server/public'),
   botname: 'Agora Bot',
