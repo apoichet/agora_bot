@@ -1,5 +1,6 @@
 const builder = require('botbuilder');
 const agoraBack = require('../../services/agoraBackEngine');
+const dialog = require('../../config/dialog');
 
 module.exports = (bot) => {
   bot.dialog('askDateDeparture',
@@ -7,7 +8,7 @@ module.exports = (bot) => {
         session.conversationData.travelform.destination = false;
         session.conversationData.travelform.date = true;
         let departures = await agoraBack.getDepartures();
-        builder.Prompts.choice(session, 'Quel Vendredi soir (à partir de 18h) ?', departures.join('|'), {listStyle: builder.ListStyle.button});
+        builder.Prompts.choice(session, dialog.manageTravel.askDepartureDate, departures.join('|'), {listStyle: builder.ListStyle.button});
       }
   );
 };

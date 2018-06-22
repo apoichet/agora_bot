@@ -33,7 +33,7 @@ class AgoraBackEngine {
    */
   async getDepartures() {
     this._options.method = 'get';
-    this._options.url = `${agoraBackUrl}/propositiondepartures`;
+    this._options.url = `${agoraBackUrl}/proposition/departures`;
     return await callPropositionEngine(this._options);
   }
 

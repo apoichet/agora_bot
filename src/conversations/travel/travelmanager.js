@@ -1,11 +1,12 @@
 const builder = require('botbuilder');
 const telegramService = require('../../services/telegramService');
 const winston = require('../../config/winston');
+const dialog = require('../../config/dialog');
 
 module.exports = (bot) => {
   // Confirme
   bot.dialog('confirmTravel', (session) => {
-    builder.Prompts.choice(session, 'On organise un voyage depuis Paris ?', 'Oui|Non', {listStyle: builder.ListStyle.button});
+    builder.Prompts.choice(session, dialog.confirmTravel, dialog.confirmYes+'|'+dialog.confirmNo, {listStyle: builder.ListStyle.button});
   })
   .triggerAction({matches: ['inspiration', 'reservation']});
 
@@ -51,7 +52,7 @@ module.exports = (bot) => {
 
       // --------------------- Choix Destination --------------------------------------------------------------
       winston.debug('Verrou destination : '+session.conversationData.travelform.destination);
-      if (session.conversationData.travelform.destination && promptTravel.message.text === 'Quelle destination ?') {
+      if (session.conversationData.travelform.destination && promptTravel.message.text === dialog.manageTravel.askDestination) {
         traveler.destination = promptTravel.data;
         winston.debug('Choix de la destination : '+traveler.destination);
         let count = 0;
@@ -69,7 +70,7 @@ module.exports = (bot) => {
 
       // --------------------- Choix Date --------------------------------------------------------------
       winston.debug('Verrou date : '+session.conversationData.travelform.date);
-      if (session.conversationData.travelform.date && promptTravel.message.text === 'Quel Vendredi soir (à partir de 18h) ?') {
+      if (session.conversationData.travelform.date && promptTravel.message.text === dialog.manageTravel.askDepartureDate) {
         traveler.date = promptTravel.data;
         winston.debug('Choix de la date : '+traveler.date);
         let count = 0;
@@ -87,7 +88,7 @@ module.exports = (bot) => {
 
       // --------------------- Choix Prix --------------------------------------------------------------
       winston.debug('Verrou prix : '+session.conversationData.travelform.price);
-      if (session.conversationData.travelform.price && promptTravel.message.text === 'Quel prix ?') {
+      if (session.conversationData.travelform.price && promptTravel.message.text === dialog.manageTravel.askPrice) {
         traveler.price = promptTravel.data;
         winston.debug('Choix du prix : '+traveler.price);
         let count = 0;
@@ -99,7 +100,7 @@ module.exports = (bot) => {
         winston.debug('Nombre de réponses : '+count);
 
         if (count === session.conversationData.chatMembersCount) {
-          builder.Prompts.choice(session, 'Merci pour vos choix, c\'est bon pour tout le monde ?', 'Oui|Non', {listStyle: builder.ListStyle.button});
+          builder.Prompts.choice(session, dialog.confirmQuote, dialog.confirmYes+'|'+dialog.confirmNo, {listStyle: builder.ListStyle.button});
         }
       }
 

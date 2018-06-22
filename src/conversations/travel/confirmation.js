@@ -1,15 +1,16 @@
 const winston = require('../../config/winston');
+const dialog = require('../../config/dialog');
 
 module.exports = (bot) => {
   bot.dialog('confirmationYes', async (session) => {
     const promptConfirm = session.message.sourceEvent.callback_query;
     winston.debug('Réponse positive du prompt de confirmation');
     if (promptConfirm) {
-      if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?' && !session.conversationData.travelform) {
+      if (promptConfirm.message.text === dialog.confirmTravel && !session.conversationData.travelform) {
         session.beginDialog('startTravel');
       }
 
-      if (promptConfirm.message.text === 'Merci pour vos choix, c\'est bon pour tout le monde ?' && session.conversationData.travelform) {
+      if (promptConfirm.message.text === dialog.confirmQuote && session.conversationData.travelform) {
         // On stock le choix des utilisateurs
         session.conversationData.travelers = session.conversationData.travelform.travelers;
         // On vide le formulaire
@@ -28,17 +29,15 @@ module.exports = (bot) => {
     const promptConfirm = session.message.sourceEvent.callback_query;
     winston.debug('Réponse négative du prompt de confirmation');
     if (promptConfirm) {
-      if (promptConfirm.message.text === 'On organise un voyage depuis Paris ?' && !session.conversationData.travelform) {
+      if (promptConfirm.message.text === dialog.confirmTravel && !session.conversationData.travelform) {
         session.send('Navré mais pour cette version nous allons devoir organiser le voyage depuis Paris :( ');
         session.replaceDialog('confirmTravel');
       }
 
-      if ((promptConfirm.message.text === 'Merci pour vos choix, c\'est bon pour tout le monde ?' || promptConfirm.message.text === 'On fait une réservation ?') &&
+      if ((promptConfirm.message.text === dialog.confirmQuote || promptConfirm.message.text === 'On fait une réservation ?') &&
           (session.conversationData.travelform || session.conversationData.travelers)) {
         session.send('Ok on annule et on recommence');
-        session.conversationData.travelform = undefined;
-        session.conversationData.travelers = undefined;
-        session.conversationData.reservation = undefined;
+        session.conversationData = undefined;
         session.replaceDialog('startTravel');
       }
     }

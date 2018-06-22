@@ -8,13 +8,19 @@ module.exports = (bot) => {
     session.sendTyping();
     agoraBack.buildProposals(session.conversationData.travelers)
     .then(async (proposals) => {
-      winston.debug(proposals);
-      session.send("Voila ce que j\'ai trouvé !");
       let quotations = await agoraBack.buildQuotations(proposals);
-      const msg = new builder.Message(session)
-      .attachmentLayout(builder.AttachmentLayout.carousel)
-      .attachments(buildCarousel(session, quotations));
-      session.send(msg);
+      if (quotations && quotations.length > 0){
+        session.send("Voila ce que j\'ai trouvé !");
+        const msg = new builder.Message(session)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments(buildCarousel(session, quotations));
+        session.send(msg);
+      }
+      else {
+        session.send("Malheuresement je n'ai rien trouvé :( \n On recommence ?");
+        session.beginDialog("confirmTravel");
+      }
+
     })
     .catch((err) => {
       if(err.statusCode === 409){
