@@ -1,5 +1,5 @@
 const builder = require('botbuilder');
-const propositionEngine = require('../../services/propositionEngine');
+const agoraBack = require('../../services/agoraBackEngine');
 
 module.exports = (bot) => {
   bot.dialog('askPrice',
@@ -7,7 +7,7 @@ module.exports = (bot) => {
         // On verouille
         session.conversationData.travelform.date = false;
         session.conversationData.travelform.price = true;
-        let prices = await propositionEngine.getPrices();
+        let prices = await agoraBack.getPrices();
         builder.Prompts.choice(session, 'Quel prix ?', prices.join('|'), {listStyle: builder.ListStyle.button});
       }
   );

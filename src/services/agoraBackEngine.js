@@ -2,10 +2,12 @@ const request = require('request-promise-native');
 const config = require('../config/index');
 const winston = require('../config/winston');
 
+const agoraBackUrl = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agoraback`;
+
 /**
  * class service proposition engine
  */
-class PropositionEngine {
+class AgoraBackEngine {
   /**
    * constructor
    */
@@ -21,7 +23,7 @@ class PropositionEngine {
    */
   async getDestinations() {
     this._options.method = 'get';
-    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/destinations`;
+    this._options.url = `${agoraBackUrl}/proposition/destinations`;
     return await callPropositionEngine(this._options);
   }
 
@@ -31,7 +33,7 @@ class PropositionEngine {
    */
   async getDepartures() {
     this._options.method = 'get';
-    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/departures`;
+    this._options.url = `${agoraBackUrl}/propositiondepartures`;
     return await callPropositionEngine(this._options);
   }
 
@@ -41,7 +43,7 @@ class PropositionEngine {
    */
   async getPrices() {
     this._options.method = 'get';
-    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/prices`;
+    this._options.url = `${agoraBackUrl}/proposition/prices`;
     return await callPropositionEngine(this._options);
   }
 
@@ -52,8 +54,32 @@ class PropositionEngine {
    */
   async buildProposals(travelerChoices) {
     this._options.method = 'post';
-    this._options.url = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agora/proposition/build`;
+    this._options.url = `${agoraBackUrl}/proposition/build`;
     this._options.body = travelerChoices;
+    return await callPropositionEngine(this._options);
+  }
+
+  /**
+   * Renvoit les quotations issues des propositions
+   * @param {propositions} propositions
+   * @return {Promise<void>}
+   */
+  async buildQuotations(propositions) {
+    this._options.method = 'post';
+    this._options.url = `${agoraBackUrl}/quotation/build`;
+    this._options.body = propositions;
+    return await callPropositionEngine(this._options);
+  }
+
+  /**
+   * Renvoit les quotations issues des propositions
+   * @param {propositions} propositions
+   * @return {Promise<void>}
+   */
+  async test() {
+    this._options.method = 'post';
+    this._options.url = `${agoraBackUrl}/test`;
+    this._options.body = {test: "test"};
     return await callPropositionEngine(this._options);
   }
 }
@@ -65,4 +91,4 @@ async function callPropositionEngine(options) {
   return response;
 }
 
-module.exports = new PropositionEngine();
+module.exports = new AgoraBackEngine();
