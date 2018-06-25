@@ -2,6 +2,7 @@
 const builder = require('botbuilder');
 const conversations = require('../conversations');
 const config = require('../config/index');
+const dialog = require('../config/dialog');
 const NlpFactory = require('../core/nlpfactory');
 const telegramService = require('../services/telegramService');
 const winston = require('../config/winston');
@@ -14,35 +15,42 @@ module.exports = (connector) => {
   // Entry point
   bot.use({
     botbuilder: (session, next) => {
-      if (session.message.text === 'test') {
-        session.conversationData.travelers = travelers;
-        session.beginDialog('quote');
-      }
 
+      //Session de réservation
+      if (session.message.text.includes('Réserver') && session.conversationData.quotations) {
+        let idQuote = session.message.text.slice(-1);
+        session.conversationData.reservationQuote = session.conversationData.quotations[idQuote - 1];
+        builder.Prompts.choice(session, dialog.confirmReservation+' '+idQuote+' ?', dialog.confirmYes+'|'+dialog.confirmNo, {listStyle: builder.ListStyle.button});
+      }
+      //Confirmation Non
+      if (session.message.text === dialog.confirmNo) {
+        session.beginDialog('confirmationNo');
+      }
+      //Confirmation Oui
+      if (session.message.text === dialog.confirmYes) {
+        session.beginDialog('confirmationYes');
+      }
+      // Session travel
+      if (session.conversationData.travelform && !(session.message.text === dialog.confirmYes || session.message.text === dialog.confirmNo)) {
+        session.beginDialog('manageTravel');
+      }
       // Call NLP
       if (session.message.text.includes(config.talkbot)) {
         next();
         session.sendTyping();
       }
 
-      if (session.message.text === 'Oui') {
-        session.beginDialog('confirmationYes');
+      // Test
+      if (session.message.text === 'test') {
+        session.conversationData.travelers = travelers;
+        session.beginDialog('quote');
       }
-
-      if (session.message.text === 'Non') {
-        session.beginDialog('confirmationNo');
-      }
-
       // Cancel conversation
       if (session.message.text.match(/^annulation$/i)) {
         winston.info('Annulation de la réservation');
         session.endConversation('Ok on annule et on stoppe la conversation');
       }
-
-      // Session travel
-      if (session.conversationData.travelform && !(session.message.text === 'Oui' || session.message.text === 'Non')) {
-        session.beginDialog('manageTravel');
-      }
+      
     }});
 
   // Recognize with NLP
@@ -64,7 +72,7 @@ module.exports = (connector) => {
     winston.error('error '+session);
     if (session && typeof session.beginDialog === 'function') {
       session.beginDialog('mistake');
-    };
+    }
   });
 
   // Assigne les conversations

@@ -8,5 +8,6 @@ module.exports = {
   confirmQuote: 'Merci pour vos choix, c\'est bon pour tout le monde ?',
   confirmYes: 'Oui',
   confirmNo: 'Non',
+  confirmReservation: 'On fait une réservation pour la n°'
 
 };

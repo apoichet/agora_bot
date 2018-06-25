@@ -14,6 +14,7 @@ module.exports = (bot) => {
         const msg = new builder.Message(session)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments(buildCarousel(session, quotations));
+        session.conversationData.quotations = quotations;
         session.send(msg);
       }
       else {
@@ -28,20 +29,20 @@ module.exports = (bot) => {
         session.replaceDialog("startTravel");
       }
       else{
-        winston.error(err);
+        winston.error(err.statusCode + ' ' + err.error.message);
       }});
   });
 };
 
 function buildCarousel(session, quotations) {
   let carousel = [];
-
   quotations.forEach((quote) => {
     let quoteCarousel = new builder.HeroCard(session)
-    .title(quote.outwardOrigin+' - '+quote.outwardDestination+' à '+quote.price+' €/personne')
-    .text('Départ : '+quote.departureDate+'\nArrivée : '+quote.arrivalDate)
-    .images([builder.CardImage.create(session, quote.urlImage)])
-    .buttons([builder.CardAction.openUrl(session, 'https://pythonhosted.org/telegram-send/', 'Réserver')]);
+    .title('N° '+quote.id+' '+quote.outwardOrigin+' - '+quote.outwardDestination+' à '+quote.price+' €')
+    .text('Départ : '+quote.departureDate+'\nArrivée : ' +quote.arrivalDate+'\n\n'+quote.fareCondition)
+    .images([builder.CardImage.create(session, quote.urlImage)
+    .tap(builder.CardAction.openUrl(session, 'https://www.oui.sncf'))])
+    .buttons([builder.CardAction.postBack(session, 'Réserver '+quote.id, 'Réserver')]);
     carousel.push(quoteCarousel);
   });
   return carousel;

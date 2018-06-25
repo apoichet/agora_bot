@@ -1,11 +1,18 @@
+const builder = require('botbuilder');
 module.exports = (bot) => {
   bot.dialog('reservation', async (session) => {
-    session.conversationData.propositions.forEach((proposition) => {
-      session.send('Je tente une réservation');
-      // On tente une réservation
-      // Dès que qu'on a une première résa de réussi on s'arrête
-      // Sinon on continue
-      // Si pas de résa alors renvoit message aux users il faut recommencer.
-    });
+    session.send('C\'est fait !');
+    session.send('Je récapitule :)');
+    let reservation = session.conversationData.reservationQuote;
+    const msg = new builder.Message(session)
+    .attachments([
+      new builder.HeroCard(session)
+      .title('Origine : '+reservation.outwardOrigin+' Destination : '+reservation.outwardDestination)
+      .text('Départ : '+reservation.departureDate+'\nArrivée : ' +reservation.arrivalDate
+          +'\nNombre de passagers : '+reservation.nbrPassenger
+          +'\nPrix : '+reservation.price + ' € soit '+ (reservation.price/reservation.nbrPassenger)+' € par personne')
+      .buttons([builder.CardAction.postBack(session, 'Payer', 'Payer')])
+    ]);
+    session.send(msg);
   });
 };

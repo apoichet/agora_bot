@@ -18,8 +18,11 @@ module.exports = (bot) => {
         session.beginDialog('quote');
       }
 
-      if (promptConfirm.message.text === 'On fait une réservation ?') {
+      if (promptConfirm.message.text.includes(dialog.confirmReservation) && session.conversationData.reservationQuote) {
         session.conversationData.travelers = undefined;
+        session.conversationData.quotations = undefined;
+        session.send('Merci, je fais la réservation...');
+        session.sendTyping();
         session.beginDialog('reservation');
       }
     }
@@ -34,10 +37,10 @@ module.exports = (bot) => {
         session.replaceDialog('confirmTravel');
       }
 
-      if ((promptConfirm.message.text === dialog.confirmQuote || promptConfirm.message.text === 'On fait une réservation ?') &&
+      if ((promptConfirm.message.text === dialog.confirmQuote || promptConfirm.message.text.includes(dialog.confirmReservation)) &&
           (session.conversationData.travelform || session.conversationData.travelers)) {
         session.send('Ok on annule et on recommence');
-        session.conversationData = undefined;
+        session.conversationData = {};
         session.replaceDialog('startTravel');
       }
     }
