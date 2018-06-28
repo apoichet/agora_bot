@@ -5,6 +5,7 @@ const ouiSncfService = require('../../services/ouiSncfService');
 const dialog = require('../../config/dialog');
 const winston = require('../../config/winston');
 const config = require('../../config/index');
+const moment = require('moment');
 
 
 module.exports = (bot) => {
@@ -50,8 +51,8 @@ module.exports = (bot) => {
        +travel.origin.cityName
        +' - '+travel.destination.cityName
        +' le '+moment(travel.departureDate).format("DD/MM/YYYY HH:mm")
-       +' à '+pnr.amount+' €')
-       +' Train n°'+trainNumber;
+       +' à '+pnr.amount+' €'
+       +' Train n°'+trainNumber);
 
    let pricePerPassenger = pnr.amount/pnr.passengers.length;
    let paypalLink = config.paypalMe.url
