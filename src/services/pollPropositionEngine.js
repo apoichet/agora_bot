@@ -7,7 +7,7 @@ const agoraBackUrl = `http://${config.platforms.propositionengine.ip}:${config.p
 /**
  * class service proposition engine
  */
-class AgoraBackEngine {
+class PollPropositionEngine {
   /**
    * constructor
    */
@@ -80,4 +80,4 @@ async function callPropositionEngine(options) {
   return response;
 }
 
-module.exports = new AgoraBackEngine();
+module.exports = new PollPropositionEngine();

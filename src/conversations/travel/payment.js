@@ -1,9 +1,11 @@
 const builder = require('botbuilder');
 const request = require('request-promise-native');
 const telegramService = require('../../services/telegramService');
+const ouiSncfService = require('../../services/ouiSncfService');
 const dialog = require('../../config/dialog');
 const winston = require('../../config/winston');
 const config = require('../../config/index');
+
 
 module.exports = (bot) => {
 
@@ -22,16 +24,8 @@ module.exports = (bot) => {
     } 
     else {
       session.send('Je vais checker la référence...');
-      let options = {
-        json: true,
-        method: 'get',
-        url: 'https://www.oui.sncf/vsa/api/order/fr_FR/'
-        + session.conversationData.payerQuotation.last_name + '/'
-        + session.conversationData.refPayment
-        + '?source=AGORA&inventory=MI_WITH_FALLBACK'
-      };
       session.sendTyping();
-      request(options)
+      ouiSncfService.getPnr(session.conversationData.payerQuotation.last_name, session.conversationData.refPayment)
       .then((pnr)=> {
         session.conversationData.pnr = pnr.order.trainFolders[session.conversationData.refPayment];
         session.conversationData.pnr.contact = pnr.order.initialContact;

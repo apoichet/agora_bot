@@ -1,4 +1,4 @@
-const agoraBack = require('../../services/agoraBackEngine');
+const propositionEngine = require('../../services/pollPropositionEngine');
 const winston = require('../../config/winston');
 const builder = require('botbuilder');
 
@@ -6,9 +6,9 @@ module.exports = (bot) => {
   bot.dialog('quote', async (session) => {
     session.send("Ok je vais voir ce que je peux faire");
     session.sendTyping();
-    agoraBack.buildProposals(session.conversationData.travelers)
+    propositionEngine.buildProposals(session.conversationData.travelers)
     .then(async (proposals) => {
-      let quotations = await agoraBack.buildQuotations(proposals);
+      let quotations = await propositionEngine.buildQuotations(proposals);
       if (quotations && quotations.length > 0){
         session.send("Voila ce que j\'ai trouvé !");
 
