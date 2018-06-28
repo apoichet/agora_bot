@@ -7,6 +7,9 @@ const NlpFactory = require('../core/nlpfactory');
 const telegramService = require('../services/telegramService');
 const winston = require('../config/winston');
 const travelers = require('../conversations/travel/testtraveleres');
+const app = require('../server/app');
+
+const request = require('request-promise-native');
 
 module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
@@ -16,17 +19,26 @@ module.exports = (connector) => {
   bot.use({
     botbuilder: (session, next) => {
 
-      //Session de réservation
-      if (session.message.text.includes('Réserver') && session.conversationData.quotations) {
-        let idQuote = session.message.text.slice(-1);
-        session.conversationData.reservationQuote = session.conversationData.quotations[idQuote - 1];
-        builder.Prompts.choice(session, dialog.confirmReservation+' '+idQuote+' ?', dialog.confirmYes+'|'+dialog.confirmNo, {listStyle: builder.ListStyle.button});
+      // Cancel conversation
+      if (session.message.text.match(/^annulation$/i)) {
+        winston.info('Annulation de la réservation');
+        session.endConversation('Ok on annule et on stoppe la conversation');
       }
-      //Confirmation Non
+
+      // Session de paiement
+      if (session.conversationData.refPayment){
+        session.conversationData.refPayment = session.message.text;
+        session.beginDialog('refPayment');
+      }
+      if (session.message.text === 'obtainPayement' && session.conversationData.quotations) {
+        session.beginDialog('confirmPayment');
+      }
+
+      // Confirmation Non
       if (session.message.text === dialog.confirmNo) {
         session.beginDialog('confirmationNo');
       }
-      //Confirmation Oui
+      // Confirmation Oui
       if (session.message.text === dialog.confirmYes) {
         session.beginDialog('confirmationYes');
       }
@@ -45,12 +57,8 @@ module.exports = (connector) => {
         session.conversationData.travelers = travelers;
         session.beginDialog('quote');
       }
-      // Cancel conversation
-      if (session.message.text.match(/^annulation$/i)) {
-        winston.info('Annulation de la réservation');
-        session.endConversation('Ok on annule et on stoppe la conversation');
-      }
-      
+
+
     }});
 
   // Recognize with NLP

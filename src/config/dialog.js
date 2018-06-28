@@ -3,11 +3,11 @@ module.exports = {
   manageTravel: {
     askDestination: 'Quelle destination ?',
     askDepartureDate: 'Quel Vendredi soir (à partir de 18h) ?',
-    askPrice: 'Quel prix ?',
+    askPrice: 'Quel prix min/max ?',
   },
   confirmQuote: 'Merci pour vos choix, c\'est bon pour tout le monde ?',
   confirmYes: 'Oui',
   confirmNo: 'Non',
-  confirmReservation: 'On fait une réservation pour la n°'
+  confirmPayment: 'On procède au paiement pour '
 
 };

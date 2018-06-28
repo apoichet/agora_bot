@@ -18,12 +18,9 @@ module.exports = (bot) => {
         session.beginDialog('quote');
       }
 
-      if (promptConfirm.message.text.includes(dialog.confirmReservation) && session.conversationData.reservationQuote) {
-        session.conversationData.travelers = undefined;
-        session.conversationData.quotations = undefined;
-        session.send('Merci, je fais la réservation...');
-        session.sendTyping();
-        session.beginDialog('reservation');
+      // Confirmation de paiement
+      if (promptConfirm.message.text.includes(dialog.confirmPayment) && session.conversationData.quotations) {
+        session.beginDialog('refPayment');
       }
     }
   }).triggerAction({matches: 'yes'});
@@ -42,6 +39,10 @@ module.exports = (bot) => {
         session.send('Ok on annule et on recommence');
         session.conversationData = {};
         session.replaceDialog('startTravel');
+      }
+      
+      if (promptConfirm.message.text.includes(dialog.confirmPayment)){
+        session.send('Ok, quelqu\'un d\'autre ?')
       }
     }
   }).triggerAction({matches: 'no'});

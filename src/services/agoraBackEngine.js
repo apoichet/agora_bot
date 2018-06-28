@@ -70,18 +70,7 @@ class AgoraBackEngine {
     this._options.body = propositions;
     return await callPropositionEngine(this._options);
   }
-
-  /**
-   * Renvoit les quotations issues des propositions
-   * @param {propositions} propositions
-   * @return {Promise<void>}
-   */
-  async test() {
-    this._options.method = 'post';
-    this._options.url = `${agoraBackUrl}/test`;
-    this._options.body = {test: "test"};
-    return await callPropositionEngine(this._options);
-  }
+  
 }
 
 async function callPropositionEngine(options) {

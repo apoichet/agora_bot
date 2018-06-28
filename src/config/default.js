@@ -54,4 +54,7 @@ module.exports = {
   image: {
     url: 'http://forum.e-train.fr/album_mod/upload/grandes/495ed81a334a9de8faf80363789f4b03.jpg',
   },
+  paypalMe:{
+    url: 'https://www.paypal.me/'
+  }
 };

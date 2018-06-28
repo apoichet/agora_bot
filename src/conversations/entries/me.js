@@ -6,6 +6,9 @@ const {WELCOME, HELP: Me} ={WELCOME: `Bonjour, je suis ${config.botname} !`,
 
 module.exports = (bot) => {
   bot.dialog('me', (session) => {
+    //On vide la session de conversation
+    session.conversationData = {};
+
     const me = new builder.Message(session)
     .attachments([
       new builder.HeroCard(session)
