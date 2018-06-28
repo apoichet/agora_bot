@@ -5,7 +5,7 @@ module.exports = {
     askDepartureDate: 'Quel Vendredi soir (à partir de 18h) ?',
     askPrice: 'Quel prix min/max ?',
   },
-  confirmQuote: 'Merci pour vos choix, c\'est bon pour tout le monde ?',
+  confirmQuote: 'Merci pour vos choix, c\'est bon pour vous ?',
   confirmYes: 'Oui',
   confirmNo: 'Non',
   confirmPayment: 'On procède au paiement pour '

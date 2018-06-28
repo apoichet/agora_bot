@@ -44,11 +44,15 @@ module.exports = (bot) => {
    let pnr = session.conversationData.pnr;
    let payer = session.conversationData.payerQuotation;
    let travel = pnr.travels[0];
-   session.send('Dossier '+pnr.reference+' : '
+   let trainNumber = travel.segments[0].trainNumber;
+
+   session.send(pnr.reference+' : '
        +travel.origin.cityName
        +' - '+travel.destination.cityName
-       +' le '+travel.departureDate
-       +' à '+pnr.amount+' €');
+       +' le '+moment(travel.departureDate).format("DD/MM/YYYY HH:mm")
+       +' à '+pnr.amount+' €')
+       +' Train n°'+trainNumber;
+
    let pricePerPassenger = pnr.amount/pnr.passengers.length;
    let paypalLink = config.paypalMe.url
        +payer.first_name

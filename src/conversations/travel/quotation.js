@@ -12,7 +12,7 @@ module.exports = (bot) => {
     session.sendTyping();
 
     try {
-      const proposals = await propositionEngine.buildProposals(travelers);
+      const proposals = await propositionEngine.buildProposals(session.conversationData.travelers);
       const quotations = await ouiSncfService.getQuotations(proposals);
       if (quotations && quotations.length > 0){
         session.send("Voila ce que j\'ai trouvé !");

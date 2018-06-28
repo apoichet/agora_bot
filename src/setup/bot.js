@@ -7,9 +7,6 @@ const NlpFactory = require('../core/nlpfactory');
 const telegramService = require('../services/telegramService');
 const winston = require('../config/winston');
 const travelers = require('../conversations/travel/testtraveleres');
-const app = require('../server/app');
-
-const request = require('request-promise-native');
 
 module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
@@ -18,11 +15,6 @@ module.exports = (connector) => {
   // Entry point
   bot.use({
     botbuilder: (session, next) => {
-
-      // Test
-      if (session.message.text === 'test') {
-        session.beginDialog('quote');
-      }
 
       // Cancel conversation
       if (session.message.text.match(/^annulation$/i)) {
