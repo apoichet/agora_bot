@@ -19,6 +19,11 @@ module.exports = (connector) => {
   bot.use({
     botbuilder: (session, next) => {
 
+      // Test
+      if (session.message.text === 'test') {
+        session.beginDialog('quote');
+      }
+
       // Cancel conversation
       if (session.message.text.match(/^annulation$/i)) {
         winston.info('Annulation de la réservation');
@@ -51,14 +56,6 @@ module.exports = (connector) => {
         next();
         session.sendTyping();
       }
-
-      // Test
-      if (session.message.text === 'test') {
-        session.conversationData.travelers = travelers;
-        session.beginDialog('quote');
-      }
-
-
     }});
 
   // Recognize with NLP

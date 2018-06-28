@@ -11,11 +11,11 @@ class PollPropositionEngine {
   /**
    * constructor
    */
-   constructor() {
-     this._options = {
-       json: true,
-     };
-   }
+  constructor() {
+    this._options = {
+      json: true,
+    };
+  }
 
   /**
    * Renvoit les detinations du poll
@@ -70,7 +70,7 @@ class PollPropositionEngine {
     this._options.body = propositions;
     return await callPropositionEngine(this._options);
   }
-  
+
 }
 
 async function callPropositionEngine(options) {
