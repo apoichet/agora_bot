@@ -17,7 +17,7 @@ module.exports = (bot) => {
         dialog.confirmYes+'|'+dialog.confirmNo, {listStyle: builder.ListStyle.button});
   });
 
-  bot.dialog('refPayment', (session) => {
+  bot.dialog('refPayment', async (session) => {
     //Check ref PNR
     if (!session.conversationData.refPayment){
       session.send('Pouvez vous renseigner la référence de votre voyage');
@@ -26,17 +26,28 @@ module.exports = (bot) => {
     else {
       session.send('Je vais checker la référence...');
       session.sendTyping();
-      ouiSncfService.getPnr(session.conversationData.payerQuotation.last_name, session.conversationData.refPayment)
-      .then((pnr)=> {
-        session.conversationData.pnr = pnr.order.trainFolders[session.conversationData.refPayment];
-        session.conversationData.pnr.contact = pnr.order.initialContact;
-        session.conversationData.refPayment=undefined;
-        session.beginDialog('payment');
-      })
-      .catch(err=>{
-        session.send('Oups, je n\'ai pas réussi à retrouver votre dossier voyage :(');
+
+      try {
+        let pnr = await ouiSncfService.getPnr(session.conversationData.payerQuotation.last_name, session.conversationData.refPayment);
+        if (pnr && pnr.order){
+          session.conversationData.pnr = pnr.order.trainFolders[session.conversationData.refPayment];
+          session.conversationData.pnr.contact = pnr.order.initialContact;
+          session.conversationData.refPayment=undefined;
+          session.beginDialog('payment');
+        }
+        else{
+          session.send('Oups, je n\'ai pas réussi à retrouver votre dossier voyage :(');
+          session.conversationData.refPayment = undefined;
+          session.send('On va réessayer');
+          session.replaceDialog('refPayment');
+        }
+      }
+      catch (err) {
         winston.error(err);
-      })
+        session.send('Il semblerait qu\'une erreur s\'est produite lors de la récupération du pnr :(');
+        session.send('On va réessayer');
+        session.replaceDialog('refPayment');
+      }
     }
   });
 

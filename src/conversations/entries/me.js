@@ -6,8 +6,9 @@ const {WELCOME, HELP: Me} ={WELCOME: `Bonjour, je suis ${config.botname} !`,
 
 module.exports = (bot) => {
   bot.dialog('me', (session) => {
-    //On vide la session de conversation
+    //On vide la session de conversation en gardant le first run
     session.conversationData = {};
+    session.conversationData.firstRun = true;
 
     const me = new builder.Message(session)
     .attachments([

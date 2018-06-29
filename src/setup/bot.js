@@ -4,9 +4,7 @@ const conversations = require('../conversations');
 const config = require('../config/index');
 const dialog = require('../config/dialog');
 const NlpFactory = require('../core/nlpfactory');
-const telegramService = require('../services/telegramService');
 const winston = require('../config/winston');
-const travelers = require('../conversations/travel/testtraveleres');
 
 module.exports = (connector) => {
   const bot = new builder.UniversalBot(connector);
@@ -15,6 +13,13 @@ module.exports = (connector) => {
   // Entry point
   bot.use({
     botbuilder: (session, next) => {
+
+      // First run conversation
+      if (!session.conversationData.firstRun){
+        session.conversationData.firstRun = true;
+        session.send(`Bonjour et bienvenue, je suis ${config.botname}`);
+        session.send(`Si vous désirez organiser un voyage, faite moi signe avec ${config.talkbot}`);
+      }
 
       // Cancel conversation
       if (session.message.text.match(/^annulation$/i)) {
@@ -52,11 +57,6 @@ module.exports = (connector) => {
 
   // Recognize with NLP
   bot.recognizer(nlp);
-
-  // Coversation Update
-  bot.on('conversationUpdate', (session) => {
-    session.conversationData.chatMembersCount = telegramService.getChatMembersCount(session.message.address.conversation.id);
-  });
 
   // Unknown intent
   bot.dialog('/', (session, args) => {

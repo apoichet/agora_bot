@@ -42,7 +42,7 @@ let logger = createLogger({
   ],
   levels: customLevels.levels,
   format: alignedWithColorsAndTime,
-  level: 'info',
+  level: 'error',
   exitOnError: false,
   silent: false,
 });

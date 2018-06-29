@@ -53,6 +53,9 @@ module.exports = {
   talkbot: '@Oui_Agora_Bot',
   image: {
     url: 'http://forum.e-train.fr/album_mod/upload/grandes/495ed81a334a9de8faf80363789f4b03.jpg',
+    url_lyon: 'http://www.olivierlegrand.fr/wp-content/uploads/2017/11/lyon.jpg',
+    url_marseille: 'http://ekladata.com/V-tdNTaDCemcedjo3mz0TK3hFHc.jpg',
+    url_bordeaux: 'http://www.properties-in-charente.com/images/bord.jpg'
   },
   paypalMe:{
     url: 'https://www.paypal.me/'
