@@ -5,6 +5,8 @@ const builder = require('botbuilder');
 const moment = require('moment');
 const config = require('../../config/index');
 
+//const travelers = require('../travel/testtraveleres');
+
 module.exports = (bot) => {
   bot.dialog('quote', async (session) => {
     session.send("Ok je vais voir ce que je peux faire");
@@ -40,7 +42,12 @@ module.exports = (bot) => {
         session.replaceDialog("startTravel");
       }
       else{
-        winston.error(err.statusCode + ' ' + err.error.message);
+        if (err.error){
+          winston.error(err.statusCode + ' ' + err.error.message);
+        }
+        else{
+          winston.error(err);
+        }
       }
     }
   });

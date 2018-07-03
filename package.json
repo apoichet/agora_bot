@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --timeout=0 ./tests/*/*.spec.js ",
     "dev": "cross-env NODE_ENV=developpement supervisor ./src/server/bin/www",
-    "start": "node ./src/server/bin/www"
+    "start": "NODE_ENV=production node ./src/server/bin/www"
   },
   "author": "alexandre_poichet",
   "license": "ISC",

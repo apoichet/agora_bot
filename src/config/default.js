@@ -40,10 +40,6 @@ module.exports = {
     telegram: {
       token: '501507889:AAHzo-Mk7Bdzr9r7XU_m-aQkQpRCpc4xz2U',
     },
-    propositionengine: {
-      ip: '192.168.75.129',
-      port: '8080',
-    },
     nucleus: {
       url: 'http://nucleus.eu-west-1.elasticbeanstalk.com/'
     }

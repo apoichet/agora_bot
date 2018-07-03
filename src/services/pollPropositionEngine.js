@@ -2,7 +2,7 @@ const request = require('request-promise-native');
 const config = require('../config/index');
 const winston = require('../config/winston');
 
-const agoraBackUrl = `http://${config.platforms.propositionengine.ip}:${config.platforms.propositionengine.port}/agoraback`;
+const agoraBackUrl = `${config.platforms.propositionengine.url}`;
 
 /**
  * class service proposition engine
@@ -56,18 +56,6 @@ class PollPropositionEngine {
     this._options.method = 'post';
     this._options.url = `${agoraBackUrl}/proposition/build`;
     this._options.body = travelerChoices;
-    return await callPropositionEngine(this._options);
-  }
-
-  /**
-   * Renvoit les quotations issues des propositions
-   * @param {propositions} propositions
-   * @return {Promise<void>}
-   */
-  async buildQuotations(propositions) {
-    this._options.method = 'post';
-    this._options.url = `${agoraBackUrl}/quotation/build`;
-    this._options.body = propositions;
     return await callPropositionEngine(this._options);
   }
 

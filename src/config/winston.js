@@ -42,9 +42,9 @@ let logger = createLogger({
   ],
   levels: customLevels.levels,
   format: alignedWithColorsAndTime,
-  level: 'error',
+  level: 'info',
   exitOnError: false,
-  silent: false,
+  silent: true,
 });
 
 // create a stream object with a 'write' function that will be used by `morgan`
